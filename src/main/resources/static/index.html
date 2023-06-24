@@ -52,85 +52,7 @@
 <div class="form-group">
     <label for="sectors">Sectors:</label>
     <select multiple size="10" id="sectors">
-        <option value="1">Manufacturing</option>
-        <option value="19" class="indent-1">Construction materials</option>
-        <option value="18" class="indent-1">Electronics and Optics</option>
-        <option value="6" class="indent-1">Food and Beverage</option>
-        <option value="342" class="indent-2">Bakery &amp; confectionery products</option>
-        <option value="43" class="indent-2">Beverages</option>
-        <option value="42" class="indent-2">Fish &amp; fish products</option>
-        <option value="40" class="indent-2">Meat &amp; meat products</option>
-        <option value="39" class="indent-2">Milk &amp; dairy products</option>
-        <option value="437" class="indent-2">Other</option>
-        <option value="378" class="indent-2">Sweets &amp; snack food</option>
-        <option value="13" class="indent-1">Furniture</option>
-        <option value="389" class="indent-2">Bathroom/sauna</option>
-        <option value="385" class="indent-2">Bedroom</option>
-        <option value="390" class="indent-2">Children’s room</option>
-        <option value="98" class="indent-2">Kitchen</option>
-        <option value="101" class="indent-2">Living room</option>
-        <option value="392" class="indent-2">Office</option>
-        <option value="394" class="indent-2">Other (Furniture)</option>
-        <option value="341" class="indent-2">Outdoor</option>
-        <option value="99" class="indent-2">Project furniture</option>
-        <option value="12" class="indent-1">Machinery</option>
-        <option value="94" class="indent-2">Machinery components</option>
-        <option value="91" class="indent-2">Machinery equipment/tools</option>
-        <option value="224" class="indent-2">Manufacture of machinery</option>
-        <option value="97" class="indent-2">Maritime</option>
-        <option value="271" class="indent-3">Aluminium and steel workboats</option>
-        <option value="269" class="indent-3">Boat/Yacht building</option>
-        <option value="230" class="indent-3">Ship repair and conversion</option>
-        <option value="93" class="indent-2">Metal structures</option>
-        <option value="508" class="indent-2">Other</option>
-        <option value="227" class="indent-2">Repair and maintenance service</option>
-        <option value="11" class="indent-1">Metalworking</option>
-        <option value="67" class="indent-2">Construction of metal structures</option>
-        <option value="263" class="indent-2">Houses and buildings</option>
-        <option value="267" class="indent-2">Metal products</option>
-        <option value="542" class="indent-2">Metal works</option>
-        <option value="75" class="indent-3">CNC-machining</option>
-        <option value="62" class="indent-3">Forgings, Fasteners</option>
-        <option value="69" class="indent-3">Gas, Plasma, Laser cutting</option>
-        <option value="66" class="indent-3">MIG, TIG, Aluminum welding</option>
-        <option value="9" class="indent-1">Plastic and Rubber</option>
-        <option value="54" class="indent-2">Packaging</option>
-        <option value="556" class="indent-2">Plastic goods</option>
-        <option value="559" class="indent-2">Plastic processing technology</option>
-        <option value="55" class="indent-3">Blowing</option>
-        <option value="57" class="indent-3">Moulding</option>
-        <option value="53" class="indent-3">Plastics welding and processing</option>
-        <option value="560" class="indent-2">Plastic profiles</option>
-        <option value="5" class="indent-1">Printing</option>
-        <option value="148" class="indent-2">Advertising</option>
-        <option value="150" class="indent-2">Book/Periodicals printing</option>
-        <option value="145" class="indent-2">Labelling and packaging printing</option>
-        <option value="7" class="indent-1">Textile and Clothing</option>
-        <option value="44" class="indent-2">Clothing</option>
-        <option value="45" class="indent-2">Textile</option>
-        <option value="8" class="indent-1">Wood</option>
-        <option value="337" class="indent-2">Other (Wood)</option>
-        <option value="51" class="indent-2">Wooden building materials</option>
-        <option value="47" class="indent-2">Wooden houses</option>
-        <option value="3">Other</option>
-        <option value="37" class="indent-1">Creative industries</option>
-        <option value="29" class="indent-1">Energy technology</option>
-        <option value="33" class="indent-1">Environment</option>
-        <option value="2">Service</option>
-        <option value="25" class="indent-1">Business services</option>
-        <option value="35" class="indent-1">Engineering</option>
-        <option value="28" class="indent-1">Information Technology and Telecommunications</option>
-        <option value="581" class="indent-2">Data processing, Web portals, E-marketing</option>
-        <option value="576" class="indent-2">Programming, Consultancy</option>
-        <option value="121" class="indent-2">Software, Hardware</option>
-        <option value="122" class="indent-2">Telecommunications</option>
-        <option value="22" class="indent-1">Tourism</option>
-        <option value="141" class="indent-1">Translation services</option>
-        <option value="21" class="indent-1">Transport and Logistics</option>
-        <option value="111" class="indent-2">Air</option>
-        <option value="114" class="indent-2">Rail</option>
-        <option value="112" class="indent-2">Road</option>
-        <option value="113" class="indent-2">Water</option>
+
     </select>
 </div>
 
@@ -145,37 +67,31 @@
 <input type="submit" value="Save">
 
 <script>
-
-  $(document).ready(function() {
-
-    function getOptionValues() {
-      var selectElement = document.getElementById("sectors");
-      var optionElements = Array.from(selectElement.options);
-      var textValues = optionElements.map(function(option) {
-        return option.textContent.trim();
-      });
-      return textValues;
-    }
-
-    // Get the option values
-    var optionValues = getOptionValues();
-
-    // AJAX call
+ $(document).ready(function() {
     $.ajax({
-      url: '/api/values', // Replace with the actual URL of your controller endpoint
-      method: 'POST',
-      data: JSON.stringify(optionValues), // Convert the option values to JSON format
-      contentType: 'application/json', // Set the content type to JSON
-      success: function(response) {
-        // Handle the response from the controller
-        console.log('AJAX request succeeded:', response);
-      },
-      error: function(xhr, status, error) {
-        // Handle any errors
-        console.log('AJAX request failed:', error);
-      }
+        url: '/api/all',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            var sectorsSelect = $('#sectors');
+
+            // Clear any existing options
+            sectorsSelect.empty();
+
+            // Loop through the data and create option elements
+            $.each(data, function(index, sector) {
+                var option = $('<option>')
+                    .val(sector.id)
+                    .text(sector.optionText);
+
+                sectorsSelect.append(option);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error(status + ': ' + error);
+        }
     });
-  });
+});
 </script>
 </body>
 </html>

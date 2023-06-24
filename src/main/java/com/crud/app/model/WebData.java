@@ -9,20 +9,23 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class WebData implements Serializable{
+public class WebData implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, updatable = false)
     private Long id;
     private String optionText;
-    private int identation;
+    private String optionValue;
+    private int indentation;
 
-    public WebData(){
+    public WebData() {
 
     }
-    public WebData(String optionText, int identation){
+
+    public WebData(String optionText, String optionValue, int indentation) {
         this.optionText = optionText;
-        this.identation = identation;
+        this.optionValue = optionValue;
+        this.indentation = indentation;
     }
 
     public void setId(Long id) {
@@ -33,8 +36,12 @@ public class WebData implements Serializable{
         this.optionText = optionText;
     }
 
-    public void setIdentation(int identation) {
-        this.identation = identation;
+    public void setOptionValue(String optionValue) {
+        this.optionValue = optionValue;
+    }
+
+    public void setIndentation(int indentation) {
+        this.indentation = indentation;
     }
 
     public Long getId() {
@@ -45,8 +52,12 @@ public class WebData implements Serializable{
         return optionText;
     }
 
-    public int getIdentation() {
-        return identation;
+    public String getOptionValue(){
+        return optionValue;
+    }
+
+    public int getIndentation() {
+        return indentation;
     }
 
 }

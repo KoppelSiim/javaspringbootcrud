@@ -1,6 +1,7 @@
 package com.crud.app;
 
 import com.crud.app.service.WebDataService;
+import com.crud.app.webscrape.WebsiteScraper.OptionData;
 import com.crud.app.webscrape.WebsiteScraper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
@@ -11,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.jsoup.nodes.Document;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
+import java.util.List;
 
 @SpringBootApplication
 public class JavaCrudApp  implements ApplicationRunner {
@@ -25,24 +26,22 @@ public class JavaCrudApp  implements ApplicationRunner {
         SpringApplication.run(JavaCrudApp.class, args);
     }
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         WebsiteScraper scraper = new WebsiteScraper();
+        List<OptionData> optionDataList = null;
 
-        Map<String, Integer> optionTextsWithData = null;
         try {
             URL url = new URL("https://www.helmes.com/wp-content/uploads/2023/06/index.html");
             Document document = scraper.getDocumentFromURL(url);
-            optionTextsWithData = scraper.extractOptionTextsData(document);
+            optionDataList= scraper.extractOptionData(document);
 
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        for (Map.Entry<String, Integer> entry : optionTextsWithData.entrySet()) {
-            String optionText = entry.getKey();
-            int identation= entry.getValue();
-            
+        for (OptionData optionData : optionDataList) {
+            webDataService.insertOptionsData(optionData.optionText(),optionData.optionValue(),optionData.nbspCount());
         }
 
     }

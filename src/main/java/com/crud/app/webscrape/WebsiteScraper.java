@@ -4,30 +4,36 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class WebsiteScraper  {
-    public Document getDocumentFromURL(URL resourceUrl) throws IOException {
-        return  Jsoup.connect(resourceUrl.toString()).get();
+
+public class WebsiteScraper {
+    public record OptionData(String optionText, String optionValue, int nbspCount) {
     }
-    public Map<String, Integer> extractOptionTextsData(Document document) {
-        Map<String, Integer> optionTextsWithData = new LinkedHashMap<>(); // Use LinkedHashMap to preserve order
+    public Document getDocumentFromURL(URL resourceUrl) throws IOException {
+        return Jsoup.connect(resourceUrl.toString()).get();
+    }
+
+    public List<OptionData> extractOptionData(Document document) {
+        List<OptionData> optionDataList = new ArrayList<>();
         Elements optionElements = document.select("select option");
 
         for (Element optionElement : optionElements) {
             String optionText = optionElement.text().replace("\u00A0", "").trim();
             int nbspCount = countNbspOccurrences(String.valueOf(optionElement));
-            optionTextsWithData.put(optionText, nbspCount);
+            String optionValue = optionElement.val();
+
+            OptionData optionData = new OptionData(optionText, optionValue, nbspCount);
+            optionDataList.add(optionData);
 
         }
 
-        return optionTextsWithData;
+        return optionDataList;
     }
 
     private int countNbspOccurrences(String text) {

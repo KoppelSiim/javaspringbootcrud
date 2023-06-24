@@ -1,6 +1,0 @@
-
-CREATE TABLE IF NOT EXISTS options (
-    id INT PRIMARY KEY,
-    name VARCHAR(100)
-
-);
