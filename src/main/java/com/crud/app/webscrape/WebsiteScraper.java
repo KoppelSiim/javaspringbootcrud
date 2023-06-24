@@ -45,7 +45,7 @@ public class WebsiteScraper {
             count++;
         }
 
-        return count;
+        return count/4;
     }
 
 }

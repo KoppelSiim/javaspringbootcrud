@@ -1,6 +1,8 @@
 package com.crud.app;
 
+import com.crud.app.model.FormInput;
 import com.crud.app.model.WebData;
+import com.crud.app.service.FormInputService;
 import com.crud.app.service.WebDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,10 +19,12 @@ import java.util.List;
 public class MainController {
     private final ResourceLoader resourceLoader;
     private final WebDataService webDataService;
+    private final FormInputService formInputService;
     @Autowired
-    public MainController(ResourceLoader resourceLoader, WebDataService webDataService) {
+    public MainController(ResourceLoader resourceLoader, WebDataService webDataService, FormInputService formInputService) {
         this.resourceLoader = resourceLoader;
         this.webDataService = webDataService;
+        this.formInputService = formInputService;
     }
     @GetMapping(value = "/static", produces = MediaType.TEXT_HTML_VALUE)
     public ResponseEntity<Resource> serveStaticHTML() {
@@ -31,5 +35,11 @@ public class MainController {
     public List<WebData> getAllWebData() {
         return webDataService.getAllWebData();
     }
+
+   @PostMapping(value = "/submit")
+   public void saveFormInput(@RequestBody FormInput formInput){
+    formInputService.insertFormInput(formInput.getName(), formInput.getSelectedOptions(),formInput.isAgreedToTerms());
+   }
+
 
 }

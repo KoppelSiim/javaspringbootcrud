@@ -81,9 +81,16 @@
             // Loop through the data and create option elements
             $.each(data, function(index, sector) {
                 var option = $('<option>')
-                    .val(sector.id)
+                    .val(sector.optionValue)
                     .text(sector.optionText);
 
+                if (sector.indentation === 1) {
+                    option.addClass('indent-1');
+                } else if (sector.indentation === 2) {
+                    option.addClass('indent-2');
+                } else if (sector.indentation === 3) {
+                    option.addClass('indent-3');
+                }
                 sectorsSelect.append(option);
             });
         },
