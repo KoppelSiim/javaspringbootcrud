@@ -1,12 +1,15 @@
 package com.crud.app.model;
 
 import java.io.Serializable;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 
 @Entity
 public class FormInput implements Serializable {
@@ -16,10 +19,15 @@ public class FormInput implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long id;
     @Column(nullable = false)
+    @NotNull
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
     @Column(nullable = false)
+    @NotNull
+    @NotEmpty(message = "Select at least one option")
     private String[] selectedOptions;
     @Column(nullable = false)
+    @AssertTrue(message = "Must agree to terms")
     private boolean agreedToTerms;
 
 
