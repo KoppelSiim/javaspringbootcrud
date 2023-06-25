@@ -9,7 +9,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +36,10 @@ public class MainController {
     }
 
    @PostMapping(value = "/submit")
-   public void saveFormInput(@RequestBody FormInput formInput){
+   @ResponseBody
+   public String saveFormInput(@RequestBody FormInput formInput){
     formInputService.insertFormInput(formInput.getName(), formInput.getSelectedOptions(),formInput.isAgreedToTerms());
+       return "Form submitted successfully!";
    }
 
 
