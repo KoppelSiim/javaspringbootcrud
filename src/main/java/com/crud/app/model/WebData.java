@@ -1,6 +1,7 @@
 package com.crud.app.model;
 
 import java.io.Serializable;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,7 +53,7 @@ public class WebData implements Serializable {
         return optionText;
     }
 
-    public String getOptionValue(){
+    public String getOptionValue() {
         return optionValue;
     }
 
