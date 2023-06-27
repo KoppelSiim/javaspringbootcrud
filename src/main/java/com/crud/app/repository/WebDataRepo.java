@@ -1,4 +1,4 @@
-package com.crud.app.repo;
+package com.crud.app.repository;
 
 import com.crud.app.model.WebData;
 import org.springframework.data.repository.CrudRepository;

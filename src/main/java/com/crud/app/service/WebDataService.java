@@ -1,7 +1,7 @@
 package com.crud.app.service;
 
 import com.crud.app.model.WebData;
-import com.crud.app.repo.WebDataRepo;
+import com.crud.app.repository.WebDataRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 

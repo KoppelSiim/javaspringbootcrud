@@ -1,7 +1,7 @@
 package com.crud.app.service;
 
 import com.crud.app.model.FormInput;
-import com.crud.app.repo.FormInputRepository;
+import com.crud.app.repository.FormInputRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
