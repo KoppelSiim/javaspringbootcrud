@@ -39,11 +39,13 @@ public class FormInput implements Serializable {
         this.name = name;
         this.selectedOptions = selectedOptions;
         this.agreedToTerms = agreedToTerms;
+
     }
 
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;

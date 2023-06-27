@@ -34,7 +34,8 @@ $(document).ready(function() {
        var formData = {
          name: $('#name').val(),
          selectedOptions: $('#sectors').val(),
-         agreedToTerms: $('#agree').prop('checked')
+         agreedToTerms: $('#agree').prop('checked'),
+
        };
 
        $.ajax({
@@ -52,6 +53,32 @@ $(document).ready(function() {
          }
        });
     });
+
+    // Update form using AJAX
+    // Update button click event
+      $('#updateButton').click(function() {
+        var formData = {
+          name: $('#name').val(),
+          selectedOptions: $('#sectors').val(),
+          agreedToTerms: $('#agree').prop('checked')
+
+        };
+
+        $.ajax({
+          type: 'PUT',
+          url: '/api/edit',
+          contentType: 'application/json',
+          data: JSON.stringify(formData),
+          success: function(response) {
+            // Handle success response
+            console.log(response);
+          },
+          error: function(error) {
+            // Handle error response
+            console.error(error);
+          }
+        });
+      });
 
     // allows to select multiple options without ctrl or shift key
     $("select").mousedown(function(e){
