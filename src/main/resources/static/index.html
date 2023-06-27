@@ -1,61 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="/script.js"></script>
+    <script type="text/javascript" src="/js/script.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <title>Java crud system</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <style>
-        .form-group {
-            margin-bottom: 10px;
-        }
-
-        .form-group label {
-            display: inline-block;
-            width: 100px;
-            font-weight: bold;
-        }
-
-        .form-group input[type="text"] {
-            width: 200px;
-        }
-
-        .indent-1 {
-            margin-left: 20px;
-        }
-
-        .indent-2 {
-            margin-left: 40px;
-        }
-
-        .indent-3 {
-            margin-left: 60px;
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        }
-
-        .checkbox-wrapper .checkmark {
-            width: 16px;
-            height: 16px;
-        }
-        .error-message {
-            color: red;
-            margin-top: 5px;
-        #user-info{
-        padding-top: 25px;
-        }
-
 
     </style>
 </head>
 <body>
 <h3>Please enter your name and pick the Sectors you are currently involved in.</h3>
 <form id="inputForm" action="#" novalidate>
-
 
     <div class="form-group">
         <label for="name">Name:</label>
@@ -65,7 +22,7 @@
     <div class="form-group">
         <label for="sectors">Sectors:</label>
         <select multiple size="10" id="sectors" name="selectedOptions" required>
-
+            <!-- Options will be added here -->
         </select>
         <div class="error-message" id="sectors-error"></div>
     </div>
@@ -81,8 +38,8 @@
 
     <button type="submit">Submit</button>
     <button type="button" id="updateButton">Update</button>
-    <div id = "user-info">
-
+    <div id="user-info">
+        <!-- User info will be added here -->
     </div>
 </form>
 

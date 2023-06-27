@@ -1,0 +1,45 @@
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    display: inline-block;
+    width: 100px;
+    font-weight: bold;
+}
+
+.form-group input[type="text"] {
+    width: 200px;
+}
+
+.indent-1 {
+    margin-left: 20px;
+}
+
+.indent-2 {
+    margin-left: 40px;
+}
+
+.indent-3 {
+    margin-left: 60px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+.checkbox-wrapper .checkmark {
+    width: 16px;
+    height: 16px;
+}
+
+.error-message {
+    color: red;
+    margin-top: 5px;
+}
+
+#user-info{
+    padding-top: 25px;
+}
