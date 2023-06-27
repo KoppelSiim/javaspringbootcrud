@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,11 +20,9 @@ public class FormInput implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long id;
     @Column(nullable = false)
-    @NotNull
-    @NotEmpty(message = "Name cannot be empty")
+    @NotBlank(message = "Name cannot be blank")
     private String name;
     @Column(nullable = false)
-    @NotNull
     @NotEmpty(message = "Select at least one option")
     private String[] selectedOptions;
     @Column(nullable = false)

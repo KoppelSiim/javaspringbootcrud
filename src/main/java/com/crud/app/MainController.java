@@ -23,7 +23,6 @@ import java.nio.file.Files;
 import java.util.List;
 
 
-
 @RestController
 @RequestMapping("/api")
 public class MainController {
@@ -73,7 +72,9 @@ public class MainController {
         Long formPrimaryKey = formInputService.insertFormInput(formInput.getName(), formInput.getSelectedOptions(), formInput.isAgreedToTerms());
         //Save form primary key as a session attribute
         session.setAttribute("formPrimaryKey", formPrimaryKey);
-        return ResponseEntity.ok("Form is valid, form data saved. " + "Session id: " + sessionId);
+        String user = formInput.getName();
+
+        return ResponseEntity.ok("Session id: " + sessionId + "<br>" + "Welcome " + user + "<br>" + "Your form data has been saved!");
 
     }
 

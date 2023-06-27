@@ -1,4 +1,33 @@
 $(document).ready(function() {
+ // Validate form fields
+    function validateForm() {
+      var nameInput = $('#name').val();
+      var selectedOptions = $('#sectors').val();
+      var agreedToTerms = $('#agree').prop('checked');
+
+      if (nameInput.trim() === '') {
+        $('#name-error').text('Please enter your name');
+        return false;
+      }
+
+      if (!selectedOptions || selectedOptions.length === 0) {
+        $('#sectors-error').text('Please select at least one option');
+        return false;
+      }
+
+      if (!agreedToTerms) {
+        $('#agree-error').text('Please agree to the terms and conditions');
+        return false;
+      }
+
+      return true; // Form is valid
+    }
+
+    // Reset error messages when inputs change
+    $('#name, #sectors, #agree').on('input', function() {
+      var errorId = $(this).attr('id') + '-error';
+      $('#' + errorId).text('');
+    });
 // get all the data from db and insert into the selectbox
     $.ajax({
         url: '/api/all',
@@ -30,7 +59,9 @@ $(document).ready(function() {
     // Submit form using AJAX
     $('#inputForm').submit(function(e) {
        e.preventDefault(); // Prevent default form submission
-
+        if (!validateForm()) {
+            return;
+          }
        var formData = {
          name: $('#name').val(),
          selectedOptions: $('#sectors').val(),
@@ -46,6 +77,7 @@ $(document).ready(function() {
          success: function(response) {
            // Handle success response
            console.log(response);
+           $('#user-info').html(response);
          },
          error: function(error) {
            // Handle error response
@@ -93,5 +125,7 @@ $(document).ready(function() {
 
         $(select ).focus();
     }).mousemove(function(e){e.preventDefault()});
+
+
 
 });

@@ -42,35 +42,48 @@
             width: 16px;
             height: 16px;
         }
+        .error-message {
+            color: red;
+            margin-top: 5px;
+        #user-info{
+        padding-top: 25px;
+        }
+
 
     </style>
 </head>
 <body>
 <h3>Please enter your name and pick the Sectors you are currently involved in.</h3>
-<form id="inputForm" action="#">
+<form id="inputForm" action="#" novalidate>
 
 
     <div class="form-group">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" required>
+        <div class="error-message" id="name-error"></div>
     </div>
     <div class="form-group">
         <label for="sectors">Sectors:</label>
-        <select multiple size="10" id="sectors" name="selectedOptions">
+        <select multiple size="10" id="sectors" name="selectedOptions" required>
 
         </select>
+        <div class="error-message" id="sectors-error"></div>
     </div>
 
     <div class="form-group">
         <label for="agree">Agree to terms</label>
         <label class="checkbox-wrapper">
-            <input type="checkbox" id="agree" name="agreedToTerms">
+            <input type="checkbox" id="agree" name="agreedToTerms" required>
             <span class="checkmark"></span>
         </label>
+        <div class="error-message" id="agree-error"></div>
     </div>
 
     <button type="submit">Submit</button>
     <button type="button" id="updateButton">Update</button>
+    <div id = "user-info">
+
+    </div>
 </form>
 
 </body>
