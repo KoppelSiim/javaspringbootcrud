@@ -42,7 +42,9 @@ public class JavaCrudApp  implements ApplicationRunner {
             e.printStackTrace();
 
         }
-        //assert optionDataList != null;
+        if (optionDataList == null) {
+            throw new NullPointerException("optionDataList is null");
+        }
         for (OptionData optionData : optionDataList) {
             webDataService.insertOptionsData(optionData.optionText(),optionData.optionValue(),optionData.nbspCount());
         }
