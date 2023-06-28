@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.jsoup.nodes.Document;
+
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -40,9 +42,12 @@ public class JavaCrudApp  implements ApplicationRunner {
             e.printStackTrace();
 
         }
+        //assert optionDataList != null;
         for (OptionData optionData : optionDataList) {
             webDataService.insertOptionsData(optionData.optionText(),optionData.optionValue(),optionData.nbspCount());
         }
 
+
     }
+
 }
