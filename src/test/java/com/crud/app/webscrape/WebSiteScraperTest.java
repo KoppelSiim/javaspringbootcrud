@@ -1,4 +1,4 @@
-package com.crud.app;
+package com.crud.app.webscrape;
 
 import com.crud.app.webscrape.WebsiteScraper;
 import org.jsoup.Jsoup;

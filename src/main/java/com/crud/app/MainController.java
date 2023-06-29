@@ -37,7 +37,7 @@ public class MainController {
         this.formInputService = formInputService;
     }
 
-    // serve my homepage
+    // Serve my api homepage
     @GetMapping(value = "/home", produces = MediaType.TEXT_HTML_VALUE)
     @ResponseBody
     public byte[] getApiPage(HttpSession httpSession) throws IOException {
@@ -47,20 +47,20 @@ public class MainController {
         return Files.readAllBytes(resource.getFile().toPath());
     }
 
-    // get all the options data
+    // Get all the options data
     @GetMapping(value = "/all")
     public List<WebData> getAllWebData() {
         return webDataService.getAllWebData();
     }
 
-    // validate and save form data, save session data
+    // Validate and save form data, save session data
     @PostMapping(value = "/submit")
     @ResponseBody
     public ResponseEntity<String> saveFormInput(@Valid @RequestBody FormInput formInput, HttpSession session, BindingResult bindingResult) {
 
-        // Check if there are any validation errors
+
         if (bindingResult.hasErrors()) {
-            // Collect the error messages from BindingResult
+
             StringBuilder validationErrors = new StringBuilder();
             for (FieldError error : bindingResult.getFieldErrors()) {
                 validationErrors.append(error.getDefaultMessage()).append(", ");
@@ -68,10 +68,8 @@ public class MainController {
             return ResponseEntity.badRequest().body("Form data validation failed: " + validationErrors.toString());
         }
         String sessionId = session.getId();
-        // Save form input as a session attribute
         session.setAttribute("formInput", formInput);
         Long formPrimaryKey = formInputService.insertFormInput(formInput.getName(), formInput.getSelectedOptions(), formInput.isAgreedToTerms());
-        //Save form primary key as a session attribute
         session.setAttribute("formPrimaryKey", formPrimaryKey);
         String user = formInput.getName();
 
@@ -81,11 +79,11 @@ public class MainController {
 
     @PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> editForm(@Valid @RequestBody FormInput newFormInput, HttpSession session, BindingResult bindingResult) {
-        // Check if the session is valid
+
         if (session.getAttribute("formInput") != null && session.getAttribute("formPrimaryKey") != null) {
-            // Check if there are any validation errors
+
             if (bindingResult.hasErrors()) {
-                // Collect the error messages from BindingResult
+
                 StringBuilder validationErrors = new StringBuilder();
                 for (FieldError error : bindingResult.getFieldErrors()) {
                     validationErrors.append(error.getDefaultMessage()).append(", ");
@@ -98,13 +96,11 @@ public class MainController {
             //Retrieve the stored form data primary key
             Long formPrimaryKey = (Long) session.getAttribute("formPrimaryKey");
             String user = newFormInput.getName();
-            // Update the original form data with new data
             originalData.setName(newFormInput.getName());
             originalData.setSelectedOptions(newFormInput.getSelectedOptions());
             originalData.setAgreedToTerms(newFormInput.isAgreedToTerms());
             formInputService.updateFormData(originalData, formPrimaryKey);
-            return ResponseEntity.ok(user+"<br>"+"Your form data was successfully updated");
-
+            return ResponseEntity.ok(user + "<br>" + "Your form data was successfully updated");
 
         } else {
             return ResponseEntity.badRequest().body("Invalid session");

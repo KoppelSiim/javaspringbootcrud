@@ -4,7 +4,7 @@ import com.crud.app.model.FormInput;
 import com.crud.app.service.FormInputService;
 import com.crud.app.service.WebDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,9 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 
-
 @WebMvcTest(MainController.class)
-public class MainControllerTest{
+public class MainControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @MockBean
@@ -34,108 +33,59 @@ public class MainControllerTest{
 
     @Autowired
     private ObjectMapper objectMapper;
+    public static String[] validSelectedOptions = new String[]{"1", "2"};
 
-    // Is the html page served correctly?
     @Test
     void testGetApiPage() throws Exception {
-        //load the content of html file
         String htmlContent = new String(Files.readAllBytes(ResourceUtils.getFile("classpath:static/index.html").toPath()));
-        mockMvc.perform(get("/api/home")
-                        .session(new MockHttpSession()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.TEXT_HTML))
-                .andExpect(content().string(htmlContent));
+        mockMvc.perform(get("/api/home").session(new MockHttpSession())).andExpect(status().isOk()).andExpect(content().contentType(MediaType.TEXT_HTML)).andExpect(content().string(htmlContent));
     }
 
-    // Verifying HTTP Request Matching
-    // Verifying Input Deserialization
     @Test
     public void testSaveFormInput_WithValidData() throws Exception {
-        FormInput formInput = new FormInput("Test Name", new String[]{"1", "2"}, true);
-
-        mockMvc.perform(post("/api/submit")
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(objectMapper.writeValueAsString(formInput)))
-              .andExpect(status().isOk());
+        FormInput formInput = new FormInput("Test Name", validSelectedOptions, true);
+        mockMvc.perform(post("/api/submit").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(formInput))).andExpect(status().isOk());
     }
 
-    // Verify that incorrect data is not processed
     @Test
     public void testSaveFormInput_WithInvalidData() throws Exception {
-        FormInput formInput = new FormInput("", new String[]{"1", "2"}, true);
+        FormInput formInput = new FormInput("", validSelectedOptions, true);
         String jsonPayload = objectMapper.writeValueAsString(formInput);
-        mockMvc.perform(post("/api/submit")
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(jsonPayload))
-              .andExpect(status().isBadRequest());
-
+        mockMvc.perform(post("/api/submit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload)).andExpect(status().isBadRequest());
     }
 
-    // Verifying HTTP Request Matching
-    // Verifying Input Deserialization
     @Test
-    public void testUpdateFormInput_WithValidData() throws Exception{
-
-        // Create a valid session and set session attributes
+    public void testUpdateFormInput_WithValidData() throws Exception {
         MockHttpSession session = new MockHttpSession();
-        FormInput originalData = new FormInput("Original name", new String[]{"1", "2"}, true);
+        FormInput originalData = new FormInput("Original name", validSelectedOptions, true);
         Long formPrimaryKey = 1L;
         session.setAttribute("formInput", originalData);
         session.setAttribute("formPrimaryKey", formPrimaryKey);
-
-        // Create the updated form input data
-        FormInput updatedData = new FormInput("Updated name", new String[]{"3", "4"}, true);
+        FormInput updatedData = new FormInput("Updated name", validSelectedOptions, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
-
-        // Perform the PUT request
-        mockMvc.perform(put("/api/edit")
-              .contentType(MediaType.APPLICATION_JSON)
-              .content(jsonPayload)
-              .session(session))
-              .andExpect(status().isOk());
+        mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isOk());
     }
-    @Test
-    public void testUpdateFormInput_WithInValidData() throws Exception{
 
-        // Create a valid session and set session attributes
+    @Test
+    public void testUpdateFormInput_WithInValidData() throws Exception {
         MockHttpSession session = new MockHttpSession();
-        FormInput originalData = new FormInput("Original name", new String[]{"1", "2"}, true);
+        FormInput originalData = new FormInput("Original name", validSelectedOptions, true);
         Long formPrimaryKey = 1L;
         session.setAttribute("formInput", originalData);
         session.setAttribute("formPrimaryKey", formPrimaryKey);
-
-        // Create the updated form with invalid input data
-        FormInput updatedData = new FormInput("", new String[]{"3", "4"}, true);
+        FormInput updatedData = new FormInput("", validSelectedOptions, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
-
-        // Perform the PUT request
-        mockMvc.perform(put("/api/edit")
-               .contentType(MediaType.APPLICATION_JSON)
-               .content(jsonPayload)
-               .session(session))
-               .andExpect(status().isBadRequest());
-
+        mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isBadRequest());
     }
-    @Test
-    public void testUpdateFormInput_WithInValidSession() throws Exception{
 
-        // Create an invalid session
+    @Test
+    public void testUpdateFormInput_WithInValidSession() throws Exception {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("formInput", null);
         session.setAttribute("formPrimaryKey", null);
-        FormInput originalData = new FormInput("Original name", new String[]{"1", "2"}, true);
-        Long formPrimaryKey = 1L;
-
-        FormInput updatedData = new FormInput("", new String[]{"3", "4"}, true);
+        FormInput updatedData = new FormInput("Updated Name",validSelectedOptions, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
-
-        // Perform the PUT request
-        mockMvc.perform(put("/api/edit")
-               .contentType(MediaType.APPLICATION_JSON)
-               .content(jsonPayload)
-               .session(session))
-               .andExpect(status().isBadRequest());
+        mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isBadRequest());
     }
-
 
 }

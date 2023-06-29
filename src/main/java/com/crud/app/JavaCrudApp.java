@@ -17,16 +17,19 @@ import java.net.URL;
 import java.util.List;
 
 @SpringBootApplication
-public class JavaCrudApp  implements ApplicationRunner {
+public class JavaCrudApp implements ApplicationRunner {
     private final WebDataService webDataService;
+
     @Autowired
     public JavaCrudApp(WebDataService webDataService) {
         this.webDataService = webDataService;
     }
+
     public static void main(String[] args) {
 
         SpringApplication.run(JavaCrudApp.class, args);
     }
+
     @Override
     public void run(ApplicationArguments args) {
 
@@ -36,7 +39,7 @@ public class JavaCrudApp  implements ApplicationRunner {
         try {
             URL url = new URL("https://www.helmes.com/wp-content/uploads/2023/06/index.html");
             Document document = scraper.getDocumentFromURL(url);
-            optionDataList= scraper.extractOptionData(document);
+            optionDataList = scraper.extractOptionData(document);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +49,7 @@ public class JavaCrudApp  implements ApplicationRunner {
             throw new NullPointerException("optionDataList is null");
         }
         for (OptionData optionData : optionDataList) {
-            webDataService.insertOptionsData(optionData.optionText(),optionData.optionValue(),optionData.nbspCount());
+            webDataService.insertOptionsData(optionData.optionText(), optionData.optionValue(), optionData.nbspCount());
         }
 
 

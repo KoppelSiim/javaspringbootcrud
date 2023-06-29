@@ -7,8 +7,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 
 @Service
 public class FormInputService {
@@ -21,7 +19,7 @@ public class FormInputService {
     }
 
     public Long insertFormInput(String name, String[] selectedOptions, boolean agreedToTerms) {
-        // Perform data check
+
         if (name == null || name.isBlank()) {
             throw new FormInputException("Name cannot be blank");
         }
@@ -50,7 +48,6 @@ public class FormInputService {
         existingFormInput.setName(formInput.getName());
         existingFormInput.setSelectedOptions(formInput.getSelectedOptions());
         existingFormInput.setAgreedToTerms(formInput.isAgreedToTerms());
-        // Save the updated form input back to the database
         formInputRepository.save(existingFormInput);
     }
 }

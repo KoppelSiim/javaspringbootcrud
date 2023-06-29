@@ -1,9 +1,8 @@
-package com.crud.app;
+package com.crud.app.service;
 
 import com.crud.app.exception.FormInputException;
 import com.crud.app.model.FormInput;
 import com.crud.app.repository.FormInputRepository;
-import com.crud.app.service.FormInputService;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,6 +12,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 @ExtendWith(MockitoExtension.class)
 public class FormInputServiceTest {
@@ -24,9 +26,8 @@ public class FormInputServiceTest {
     @Captor
     private ArgumentCaptor<FormInput> formInputArgumentCaptor;
 
-    // Is the form input data object correctly built and saved to database?
     @Test
-    public void testFormInputData() {
+    public void testFormInputWithValidData() {
         String name = "Test Name";
         String[] selectedOptions = {"1", "18", "19"};
         boolean agreedToTerms = true;
@@ -39,19 +40,13 @@ public class FormInputServiceTest {
         assertEquals(agreedToTerms, formInput.isAgreedToTerms());
     }
 
-    // Is an exception thrown when entering faulty data?
-    @Test
-    public void testSaveFormInput_WithFaultyData() {
-        String emptyName = "";
-        String validName = "Valid Name";
-        String[] noSelectedOptions = {}; // No options selected
-        String[] selectedOptions = {"1", "18","19"};
-        boolean notAgreedToTerms = false;
-        boolean agreedToTerms = true;
-        assertThrows(FormInputException.class, () -> formInputService.insertFormInput(emptyName, selectedOptions, agreedToTerms));
-        assertThrows(FormInputException.class, () -> formInputService.insertFormInput(validName,noSelectedOptions, agreedToTerms));
-        assertThrows(FormInputException.class, () -> formInputService.insertFormInput(validName,selectedOptions, notAgreedToTerms));
 
+    @ParameterizedTest
+    @CsvSource({", 1,18,19, true", "Valid Name, , true, false", "Valid Name, 1,18,19, false"})
+
+    public void testSaveFormInput_WithFaultyData(String name, String selectedOptions, boolean agreedToTerms, boolean expectedException) {
+        String[] options = selectedOptions != null && !selectedOptions.isEmpty() ? selectedOptions.split(",") : new String[0];
+        assertThrows(FormInputException.class, () -> formInputService.insertFormInput(name, options, agreedToTerms));
 
     }
 

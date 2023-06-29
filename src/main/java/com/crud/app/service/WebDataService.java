@@ -12,17 +12,18 @@ public class WebDataService {
     private final WebDataRepo webDataRepository;
 
     @Autowired
-    public WebDataService(WebDataRepo webDataRepository){
+    public WebDataService(WebDataRepo webDataRepository) {
         this.webDataRepository = webDataRepository;
     }
 
-    public void insertOptionsData(String optionText, String optionValue, int indentation){
+    public void insertOptionsData(String optionText, String optionValue, int indentation) {
         WebData webData = new WebData();
         webData.setOptionText(optionText);
         webData.setOptionValue(optionValue);
         webData.setIndentation(indentation);
         webDataRepository.save(webData);
     }
+
     public List<WebData> getAllWebData() {
         return (List<WebData>) webDataRepository.findAll();
     }
