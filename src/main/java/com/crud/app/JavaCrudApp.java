@@ -8,9 +8,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 import org.jsoup.nodes.Document;
-
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,10 +30,8 @@ public class JavaCrudApp implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-
         WebsiteScraper scraper = new WebsiteScraper();
         List<OptionData> optionDataList = null;
-
         try {
             URL url = new URL("https://www.helmes.com/wp-content/uploads/2023/06/index.html");
             Document document = scraper.getDocumentFromURL(url);
@@ -51,8 +47,5 @@ public class JavaCrudApp implements ApplicationRunner {
         for (OptionData optionData : optionDataList) {
             webDataService.insertOptionsData(optionData.optionText(), optionData.optionValue(), optionData.nbspCount());
         }
-
-
     }
-
 }

@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-
 @Entity
 public class WebData implements Serializable {
     @Id
@@ -60,5 +59,4 @@ public class WebData implements Serializable {
     public int getIndentation() {
         return indentation;
     }
-
 }

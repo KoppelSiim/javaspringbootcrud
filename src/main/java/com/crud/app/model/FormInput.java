@@ -11,7 +11,6 @@ import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
-
 @Entity
 public class FormInput implements Serializable {
 
@@ -29,7 +28,6 @@ public class FormInput implements Serializable {
     @AssertTrue(message = "Must agree to terms")
     private boolean agreedToTerms;
 
-
     public FormInput() {
 
     }
@@ -44,7 +42,6 @@ public class FormInput implements Serializable {
     public Long getId() {
         return id;
     }
-
 
     public void setId(Long id) {
         this.id = id;

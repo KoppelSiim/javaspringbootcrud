@@ -20,7 +20,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class FormInputServiceTest {
     @Mock
     private FormInputRepository formInputRepository;
-
     @InjectMocks
     private FormInputService formInputService;
     @Captor
@@ -31,7 +30,6 @@ public class FormInputServiceTest {
         String name = "Test Name";
         String[] selectedOptions = {"1", "18", "19"};
         boolean agreedToTerms = true;
-
         formInputService.insertFormInput(name, selectedOptions, agreedToTerms);
         verify(formInputRepository).save(formInputArgumentCaptor.capture());
         FormInput formInput = formInputArgumentCaptor.getValue();
@@ -40,14 +38,14 @@ public class FormInputServiceTest {
         assertEquals(agreedToTerms, formInput.isAgreedToTerms());
     }
 
-
     @ParameterizedTest
-    @CsvSource({", 1,18,19, true", "Valid Name, , true, false", "Valid Name, 1,18,19, false"})
-
-    public void testSaveFormInput_WithFaultyData(String name, String selectedOptions, boolean agreedToTerms, boolean expectedException) {
+    @CsvSource({
+            "null, 1,18,19, true",
+            "Valid Name, , true, false",
+            "Valid Name, 1,18,19, false"
+    })
+    public void testSaveFormInput_WithFaultyData(String name, String selectedOptions, boolean agreedToTerms) {
         String[] options = selectedOptions != null && !selectedOptions.isEmpty() ? selectedOptions.split(",") : new String[0];
         assertThrows(FormInputException.class, () -> formInputService.insertFormInput(name, options, agreedToTerms));
-
     }
-
 }

@@ -15,7 +15,6 @@ import static org.mockito.Mockito.verify;
 public class WebDataServiceTest {
     @Mock
     private WebDataRepo webDataRepository;
-
     @InjectMocks
     private WebDataService webDataService;
     @Captor
@@ -23,16 +22,12 @@ public class WebDataServiceTest {
 
     @Test
     public void testInsertOptionsData() {
-
         String optionText = "Option Text";
         String optionValue = "Option Value";
         int indentation = 2;
-
         webDataService.insertOptionsData(optionText, optionValue, indentation);
-
         verify(webDataRepository).save(webDataCaptor.capture());
         WebData capturedWebData = webDataCaptor.getValue();
-
         assertEquals(optionText, capturedWebData.getOptionText());
         assertEquals(optionValue, capturedWebData.getOptionValue());
         assertEquals(indentation, capturedWebData.getIndentation());

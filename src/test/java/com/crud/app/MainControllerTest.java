@@ -30,10 +30,9 @@ public class MainControllerTest {
     private WebDataService webDataService;
     @MockBean
     private FormInputService formInputService;
-
     @Autowired
     private ObjectMapper objectMapper;
-    public static String[] validSelectedOptions = new String[]{"1", "2"};
+    private static final String[] VALID_SELECTED_OPTIONS = new String[]{"1", "2"};
 
     @Test
     void testGetApiPage() throws Exception {
@@ -43,13 +42,13 @@ public class MainControllerTest {
 
     @Test
     public void testSaveFormInput_WithValidData() throws Exception {
-        FormInput formInput = new FormInput("Test Name", validSelectedOptions, true);
+        FormInput formInput = new FormInput("Test Name", VALID_SELECTED_OPTIONS, true);
         mockMvc.perform(post("/api/submit").contentType(MediaType.APPLICATION_JSON).content(objectMapper.writeValueAsString(formInput))).andExpect(status().isOk());
     }
 
     @Test
     public void testSaveFormInput_WithInvalidData() throws Exception {
-        FormInput formInput = new FormInput("", validSelectedOptions, true);
+        FormInput formInput = new FormInput("", VALID_SELECTED_OPTIONS, true);
         String jsonPayload = objectMapper.writeValueAsString(formInput);
         mockMvc.perform(post("/api/submit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload)).andExpect(status().isBadRequest());
     }
@@ -57,11 +56,11 @@ public class MainControllerTest {
     @Test
     public void testUpdateFormInput_WithValidData() throws Exception {
         MockHttpSession session = new MockHttpSession();
-        FormInput originalData = new FormInput("Original name", validSelectedOptions, true);
+        FormInput originalData = new FormInput("Original name", VALID_SELECTED_OPTIONS, true);
         Long formPrimaryKey = 1L;
         session.setAttribute("formInput", originalData);
         session.setAttribute("formPrimaryKey", formPrimaryKey);
-        FormInput updatedData = new FormInput("Updated name", validSelectedOptions, true);
+        FormInput updatedData = new FormInput("Updated name", VALID_SELECTED_OPTIONS, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
         mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isOk());
     }
@@ -69,11 +68,11 @@ public class MainControllerTest {
     @Test
     public void testUpdateFormInput_WithInValidData() throws Exception {
         MockHttpSession session = new MockHttpSession();
-        FormInput originalData = new FormInput("Original name", validSelectedOptions, true);
+        FormInput originalData = new FormInput("Original name", VALID_SELECTED_OPTIONS, true);
         Long formPrimaryKey = 1L;
         session.setAttribute("formInput", originalData);
         session.setAttribute("formPrimaryKey", formPrimaryKey);
-        FormInput updatedData = new FormInput("", validSelectedOptions, true);
+        FormInput updatedData = new FormInput("", VALID_SELECTED_OPTIONS, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
         mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isBadRequest());
     }
@@ -83,9 +82,8 @@ public class MainControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("formInput", null);
         session.setAttribute("formPrimaryKey", null);
-        FormInput updatedData = new FormInput("Updated Name",validSelectedOptions, true);
+        FormInput updatedData = new FormInput("Updated Name", VALID_SELECTED_OPTIONS, true);
         String jsonPayload = objectMapper.writeValueAsString(updatedData);
         mockMvc.perform(put("/api/edit").contentType(MediaType.APPLICATION_JSON).content(jsonPayload).session(session)).andExpect(status().isBadRequest());
     }
-
 }
