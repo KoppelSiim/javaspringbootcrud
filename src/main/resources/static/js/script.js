@@ -102,11 +102,10 @@ $(document).ready(function() {
           contentType: 'application/json',
           data: JSON.stringify(formData),
           success: function(response) {
-            // Handle success response
             console.log(response);
+            $('#user-info').html(response);
           },
           error: function(error) {
-            // Handle error response
             console.error(error);
           }
         });

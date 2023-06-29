@@ -47,6 +47,7 @@ public class MainController {
         return Files.readAllBytes(resource.getFile().toPath());
     }
 
+    // get all the options data
     @GetMapping(value = "/all")
     public List<WebData> getAllWebData() {
         return webDataService.getAllWebData();
@@ -74,7 +75,7 @@ public class MainController {
         session.setAttribute("formPrimaryKey", formPrimaryKey);
         String user = formInput.getName();
 
-        return ResponseEntity.ok("Session id: " + sessionId + "<br>" + "Welcome " + user + "<br>" + "Your form data has been saved!");
+        return ResponseEntity.ok("Welcome " + user + "<br>" + "Your form data has been saved!");
 
     }
 
@@ -89,18 +90,21 @@ public class MainController {
                 for (FieldError error : bindingResult.getFieldErrors()) {
                     validationErrors.append(error.getDefaultMessage()).append(", ");
                 }
-                return ResponseEntity.badRequest().body("Form data validation failed: " + validationErrors.toString());
+                return ResponseEntity.badRequest().body("Form data validation failed: " + validationErrors);
             }
+
             // Retrieve the original stored form data from the session
             FormInput originalData = (FormInput) session.getAttribute("formInput");
             //Retrieve the stored form data primary key
             Long formPrimaryKey = (Long) session.getAttribute("formPrimaryKey");
+            String user = newFormInput.getName();
             // Update the original form data with new data
             originalData.setName(newFormInput.getName());
             originalData.setSelectedOptions(newFormInput.getSelectedOptions());
             originalData.setAgreedToTerms(newFormInput.isAgreedToTerms());
             formInputService.updateFormData(originalData, formPrimaryKey);
-            return ResponseEntity.ok("Form data updated successfully.");
+            return ResponseEntity.ok(user+"<br>"+"Your form data was successfully updated");
+
 
         } else {
             return ResponseEntity.badRequest().body("Invalid session");
