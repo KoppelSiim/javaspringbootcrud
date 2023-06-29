@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 public class WebsiteScraper {
     public record OptionData(String optionText, String optionValue, int nbspCount) {
     }
+
     public Document getDocumentFromURL(URL resourceUrl) throws IOException {
         return Jsoup.connect(resourceUrl.toString()).get();
     }
@@ -23,15 +24,17 @@ public class WebsiteScraper {
         List<OptionData> optionDataList = new ArrayList<>();
         Elements optionElements = document.select("select option");
 
-        for (Element optionElement : optionElements) {
-            String optionText = optionElement.text().replace("\u00A0", "").trim();
-            int nbspCount = countNbspOccurrences(String.valueOf(optionElement));
-            String optionValue = optionElement.val();
+        
+            for (Element optionElement : optionElements) {
+                if (optionElement != null) {
+                    String optionText = optionElement.text().replace("\u00A0", "").trim();
+                    int nbspCount = countNbspOccurrences(String.valueOf(optionElement));
+                    String optionValue = optionElement.val();
 
-            OptionData optionData = new OptionData(optionText, optionValue, nbspCount);
-            optionDataList.add(optionData);
-
-        }
+                    OptionData optionData = new OptionData(optionText, optionValue, nbspCount);
+                    optionDataList.add(optionData);
+                }
+            }
 
         return optionDataList;
     }
@@ -45,7 +48,7 @@ public class WebsiteScraper {
             count++;
         }
 
-        return count/4;
+        return count / 4;
     }
 
 }
