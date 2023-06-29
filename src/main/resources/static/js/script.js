@@ -1,9 +1,9 @@
 $(document).ready(function() {
- // Validate form fields
+    // Validate form fields
     function validateForm() {
-      var nameInput = $('#name').val();
-      var selectedOptions = $('#sectors').val();
-      var agreedToTerms = $('#agree').prop('checked');
+      let nameInput = $('#name').val();
+      let selectedOptions = $('#sectors').val();
+      let agreedToTerms = $('#agree').prop('checked');
 
       if (nameInput.trim() === '') {
         $('#name-error').text('Please enter your name');
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     // Reset error messages when inputs change
     $('#name, #sectors, #agree').on('input', function() {
-      var errorId = $(this).attr('id') + '-error';
+      let errorId = $(this).attr('id') + '-error';
       $('#' + errorId).text('');
     });
 // get all the data from db and insert into the selectbox
@@ -34,11 +34,11 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         success: function(data) {
-            var sectorsSelect = $('#sectors');
+            let sectorsSelect = $('#sectors');
             sectorsSelect.empty();
             // Loop through the data and create option elements
             $.each(data, function(index, sector) {
-                var option = $('<option>')
+                let option = $('<option>')
                     .val(sector.optionValue)
                     .text(sector.optionText);
                 if (sector.indentation === 1) {
@@ -62,7 +62,7 @@ $(document).ready(function() {
         if (!validateForm()) {
             return;
           }
-       var formData = {
+       let formData = {
          name: $('#name').val(),
          selectedOptions: $('#sectors').val(),
          agreedToTerms: $('#agree').prop('checked'),
@@ -89,7 +89,7 @@ $(document).ready(function() {
     // Update form using AJAX
     // Update button click event
       $('#updateButton').click(function() {
-        var formData = {
+        let formData = {
           name: $('#name').val(),
           selectedOptions: $('#sectors').val(),
           agreedToTerms: $('#agree').prop('checked')
@@ -110,13 +110,12 @@ $(document).ready(function() {
           }
         });
       });
-
     // allows to select multiple options without ctrl or shift key
     $("select").mousedown(function(e){
         e.preventDefault();
 
-        var select = this;
-        var scroll = select .scrollTop;
+        let select = this;
+        let scroll = select .scrollTop;
 
         e.target.selected = !e.target.selected;
 
@@ -124,7 +123,4 @@ $(document).ready(function() {
 
         $(select ).focus();
     }).mousemove(function(e){e.preventDefault()});
-
-
-
 });
